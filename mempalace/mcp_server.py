@@ -202,7 +202,9 @@ def tool_get_taxonomy():
     return {"taxonomy": taxonomy}
 
 
-def tool_search(query: str, limit: int = 5, wing: str = None, room: str = None, context: str = None):
+def tool_search(
+    query: str, limit: int = 5, wing: str = None, room: str = None, context: str = None
+):
     # Mitigate system prompt contamination (Issue #333)
     sanitized = sanitize_query(query)
     result = search_memories(

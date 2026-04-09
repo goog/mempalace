@@ -24,12 +24,12 @@ import logging
 logger = logging.getLogger("mempalace_mcp")
 
 # --- Constants ---
-MAX_QUERY_LENGTH = 500    # Above this, system prompt almost certainly dominates
-SAFE_QUERY_LENGTH = 200   # Below this, query is almost certainly clean
-MIN_QUERY_LENGTH = 10     # Extracted result shorter than this = extraction failed
+MAX_QUERY_LENGTH = 500  # Above this, system prompt almost certainly dominates
+SAFE_QUERY_LENGTH = 200  # Below this, query is almost certainly clean
+MIN_QUERY_LENGTH = 10  # Extracted result shorter than this = extraction failed
 
 # Sentence splitter: split on . ! ? (including fullwidth) and newlines
-_SENTENCE_SPLIT = re.compile(r'[.!?。！？\n]+')
+_SENTENCE_SPLIT = re.compile(r"[.!?。！？\n]+")
 
 # Question detector: ends with ? or ？ (possibly with trailing whitespace/quotes)
 _QUESTION_MARK = re.compile(r'[?？]\s*["\']?\s*$')
@@ -109,7 +109,8 @@ def sanitize_query(raw_query: str) -> dict:
                 candidate = candidate[-MAX_QUERY_LENGTH:]
             logger.warning(
                 "Query sanitized: %d → %d chars (method=question_extraction)",
-                original_length, len(candidate)
+                original_length,
+                len(candidate),
             )
             return {
                 "clean_query": candidate,
@@ -130,7 +131,8 @@ def sanitize_query(raw_query: str) -> dict:
                 candidate = candidate[-MAX_QUERY_LENGTH:]
             logger.warning(
                 "Query sanitized: %d → %d chars (method=tail_sentence)",
-                original_length, len(candidate)
+                original_length,
+                len(candidate),
             )
             return {
                 "clean_query": candidate,
@@ -144,8 +146,7 @@ def sanitize_query(raw_query: str) -> dict:
     # Nothing worked — just take the last MAX_QUERY_LENGTH characters.
     candidate = raw_query[-MAX_QUERY_LENGTH:].strip()
     logger.warning(
-        "Query sanitized: %d → %d chars (method=tail_truncation)",
-        original_length, len(candidate)
+        "Query sanitized: %d → %d chars (method=tail_truncation)", original_length, len(candidate)
     )
     return {
         "clean_query": candidate,
