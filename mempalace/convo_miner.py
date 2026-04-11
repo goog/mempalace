@@ -235,7 +235,6 @@ def detect_convo_room(content: str) -> str:
 
     Returns room name string.
     """
-    
     _init_embeddings()
 
     text = content[:MAX_CONTENT_LENGTH]
@@ -249,11 +248,11 @@ def detect_convo_room(content: str) -> str:
         )
         best_idx = int(np.argmax(sims))
         scores[room] = float(sims[best_idx])
-        
+
 
     ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
     top_score = ranked[0][1]
-    
+
     if top_score < SIMILARITY_THRESHOLD:
         return "general"
 
